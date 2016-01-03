@@ -1,19 +1,27 @@
 package at.ac.tuwien.imw.pdca.cppi;
 
 import at.ac.tuwien.imw.pdca.DoProcess;
+import at.ac.tuwien.imw.pdca.cppi.service.CPPIService;
 
 public class CPPIDoProcess extends DoProcess {
 	private CPPIDoRules rules;
 	
+	CPPIDoProcess(){
+		this.setDoRules(new CPPIDoRules());
+	}
+	
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		operate();
+		try {
+			Thread.sleep(CPPIService.CONTROL_INTERVAL*1000);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		this.operate();
 	}
 
 	@Override
 	public void operate() {
-		// TODO Auto-generated method stub
 		rules.applyDoRules();
 	}
 	

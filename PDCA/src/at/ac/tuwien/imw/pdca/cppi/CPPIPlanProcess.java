@@ -22,7 +22,6 @@ public class CPPIPlanProcess extends PlanProcess<CPPIPlanningRules> {
 
 	@Override
 	public void plan() {
-		// TODO Auto-generated method stub
 		this.rules.applyPlanningRules();
 	}
 	

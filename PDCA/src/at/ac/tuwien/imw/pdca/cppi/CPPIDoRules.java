@@ -6,8 +6,7 @@ public class CPPIDoRules implements DoRules{
 
 	@Override
 	public void applyDoRules() {
-		// TODO Auto-generated method stub
-		
+		// TODO Everything that "Do" should do.
 	}
 
 }
