@@ -1,13 +1,22 @@
 package at.ac.tuwien.imw.pdca.cppi;
 
 import at.ac.tuwien.imw.pdca.PlanProcess;
+import at.ac.tuwien.imw.pdca.cppi.service.CPPIService;
 
 public class CPPIPlanProcess extends PlanProcess<CPPIPlanningRules> {
 	private CPPIPlanningRules rules;
 	
+	CPPIPlanProcess(){
+		setPlanningRules(new CPPIPlanningRules());
+	}
+	
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
+		try {
+			Thread.sleep(CPPIService.CONTROL_INTERVAL*1000);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		this.plan();
 	}
 
