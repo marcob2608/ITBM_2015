@@ -6,7 +6,7 @@ import at.ac.tuwien.imw.pdca.cppi.service.CPPIService;
 public class CPPIDoProcess extends DoProcess {
 	private CPPIDoRules rules;
 	
-	CPPIDoProcess(){
+	public CPPIDoProcess(){
 		this.setDoRules(new CPPIDoRules());
 	}
 	

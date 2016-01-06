@@ -11,7 +11,7 @@ import at.ac.tuwien.imw.pdca.cppi.service.CPPIService;
 public class CPPICheckProcess<T> extends CheckProcess<T> {
 	private CPPICheckingRules rules;
 	
-	CPPICheckProcess(){
+	public CPPICheckProcess(){
 		setCheckingRules(new CPPICheckingRules());
 	}
 	

@@ -6,7 +6,7 @@ import at.ac.tuwien.imw.pdca.cppi.service.CPPIService;
 public class CPPIPlanProcess extends PlanProcess<CPPIPlanningRules> {
 	private CPPIPlanningRules rules;
 	
-	CPPIPlanProcess(){
+	public CPPIPlanProcess(){
 		setPlanningRules(new CPPIPlanningRules());
 	}
 	
