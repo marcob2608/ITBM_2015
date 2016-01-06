@@ -1,10 +1,15 @@
 package at.ac.tuwien.imw.pdca.cppi;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import at.ac.tuwien.imw.pdca.PlanProcess;
 import at.ac.tuwien.imw.pdca.cppi.service.CPPIService;
+import at.ac.tuwien.imw.pdca.cppi.service.CPPISimulation;
 
-public class CPPIPlanProcess extends PlanProcess<CPPIPlanningRules> {
+public class CPPIPlanProcess extends PlanProcess<Object> {
 	private CPPIPlanningRules rules;
+	private final static Logger log = LogManager.getLogger(PlanProcess.class);
 	
 	public CPPIPlanProcess(){
 		setPlanningRules(new CPPIPlanningRules());
@@ -23,6 +28,7 @@ public class CPPIPlanProcess extends PlanProcess<CPPIPlanningRules> {
 	@Override
 	public void plan() {
 		this.rules.applyPlanningRules();
+		log.info("Planing Rules applied");
 	}
 	
 	public CPPIPlanningRules getPlanningRules() {
