@@ -8,7 +8,7 @@ import at.ac.tuwien.imw.pdca.MeasuredPerformanceValue;
 import at.ac.tuwien.imw.pdca.ObjectiveSetting;
 import at.ac.tuwien.imw.pdca.cppi.service.CPPIService;
 
-public class CPPICheckProcess<T> extends CheckProcess<T> {
+public class CPPICheckProcess extends CheckProcess<BigDecimal> {
 	private CPPICheckingRules rules;
 	
 	public CPPICheckProcess(){
@@ -22,16 +22,21 @@ public class CPPICheckProcess<T> extends CheckProcess<T> {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		CPPIService service = CPPIService.getInstance();
+		CPPIMeasureRules measurerules = new CPPIMeasureRules();
+		ObjectiveSetting<BigDecimal> objective = new CPPIObjectiveSetting();
+		
+		objective.setObjectiveSetting(service.getCppiValues().getFloor());
+		
+		MeasuredPerformanceValue<BigDecimal> value = measurerules.measure(); 
+		
+		Deviation<BigDecimal> deviation = getCheckResult(objective, value);
+		
+		service.setDeviationValue(deviation.getValue());
+		
 		//getcheckResult();
 	}
 
-	@Override
-	public Deviation getCheckResult(ObjectiveSetting<T> objective,
-			MeasuredPerformanceValue<T> performanceMeasureValue) {
-		BigDecimal objectivevalue = (BigDecimal) objective.getObjectiveSetting();
-		BigDecimal measurevalue = (BigDecimal) performanceMeasureValue.getValue();
-		return new CPPITSRChange(objectivevalue.subtract(measurevalue));
-		}
 	
 	public CPPICheckingRules getCheckingRules(){
 		return this.rules;
@@ -39,6 +44,13 @@ public class CPPICheckProcess<T> extends CheckProcess<T> {
 	
 	public void setCheckingRules(CPPICheckingRules rules){
 		this.rules = rules;
+	}
+
+	@Override
+	public Deviation<BigDecimal> getCheckResult(ObjectiveSetting<BigDecimal> objective,
+			MeasuredPerformanceValue<BigDecimal> performanceMeasureValue) {
+		BigDecimal deviation = performanceMeasureValue.getValue().subtract(objective.getObjectiveSetting());
+		return new CPPIDeviation(deviation);
 	}
 
 }
