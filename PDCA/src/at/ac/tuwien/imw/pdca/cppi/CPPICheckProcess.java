@@ -33,8 +33,6 @@ public class CPPICheckProcess extends CheckProcess<BigDecimal> {
 		Deviation<BigDecimal> deviation = getCheckResult(objective, value);
 		
 		service.setDeviationValue(deviation.getValue());
-		
-		//getcheckResult();
 	}
 
 	

@@ -17,11 +17,6 @@ public class CPPIPlanProcess extends PlanProcess<Object> {
 	
 	@Override
 	public void run() {
-		try {
-			Thread.sleep(CPPIService.CONTROL_INTERVAL*1000);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		this.plan();
 	}
 
