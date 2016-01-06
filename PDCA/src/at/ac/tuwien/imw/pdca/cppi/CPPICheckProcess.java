@@ -1,5 +1,7 @@
 package at.ac.tuwien.imw.pdca.cppi;
 
+import java.io.Closeable;
+import java.io.IOException;
 import java.math.BigDecimal;
 
 import at.ac.tuwien.imw.pdca.CheckProcess;
@@ -8,38 +10,45 @@ import at.ac.tuwien.imw.pdca.MeasuredPerformanceValue;
 import at.ac.tuwien.imw.pdca.ObjectiveSetting;
 import at.ac.tuwien.imw.pdca.cppi.service.CPPIService;
 
-public class CPPICheckProcess extends CheckProcess<BigDecimal> {
+public class CPPICheckProcess extends CheckProcess<BigDecimal> implements Closeable {
 	private CPPICheckingRules rules;
-	
+	private boolean running = true;
+
 	public CPPICheckProcess(){
 		setCheckingRules(new CPPICheckingRules());
 	}
-	
+
 	@Override
 	public void run() {
-		try {
-			Thread.sleep(CPPIService.CONTROL_INTERVAL*1000);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		CPPIService service = CPPIService.getInstance();
-		CPPIMeasureRules measurerules = new CPPIMeasureRules();
-		ObjectiveSetting<BigDecimal> objective = new CPPIObjectiveSetting();
-		
-		objective.setObjectiveSetting(service.getCppiValues().getFloor());
-		
-		MeasuredPerformanceValue<BigDecimal> value = measurerules.measure(); 
-		
-		Deviation<BigDecimal> deviation = getCheckResult(objective, value);
-		
-		service.setDeviationValue(deviation.getValue());
+		while(running) {
+			try {
+				Thread.sleep(CPPIService.CONTROL_INTERVAL*1000);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			CPPIService service = CPPIService.getInstance();
+			CPPIMeasureRules measurerules = new CPPIMeasureRules();
+			ObjectiveSetting<BigDecimal> objective = new CPPIObjectiveSetting();
+
+			objective.setObjectiveSetting(service.getCppiValues().getFloor());
+
+			MeasuredPerformanceValue<BigDecimal> value = measurerules.measure(); 
+
+			Deviation<BigDecimal> deviation = getCheckResult(objective, value);
+
+			service.setDeviationValue(deviation.getValue());
+		}		
+	}
+	
+	public void close() throws IOException {
+		running = false;
 	}
 
-	
+
 	public CPPICheckingRules getCheckingRules(){
 		return this.rules;
 	}
-	
+
 	public void setCheckingRules(CPPICheckingRules rules){
 		this.rules = rules;
 	}
