@@ -12,12 +12,15 @@ public class CPPIDoProcess extends DoProcess {
 	
 	@Override
 	public void run() {
-		try {
-			Thread.sleep(CPPIService.CONTROL_INTERVAL*1000);
-		} catch (Exception e) {
-			e.printStackTrace();
+		while(true){
+			try {
+				Thread.sleep(CPPIService.CONTROL_INTERVAL*1000);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			this.operate();
 		}
-		this.operate();
+		
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package at.ac.tuwien.imw.pdca.cppi.service;
 
+import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -24,6 +25,7 @@ public class CPPISimulation {
 
 	public static void main(String[] args) {
 
+		BasicConfigurator.configure();
 		CPPIService.getInstance().init();
 		try {
 			planProcess = new CPPIPlanProcess();
