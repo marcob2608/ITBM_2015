@@ -10,7 +10,6 @@ public class CPPIMeasureRules implements MeasureRules<Object>{
 
 	@Override
 	public MeasuredPerformanceValue measure() {
-		// TODO Auto-generated method stub
 		CPPIService service = CPPIService.getInstance();
 		BigDecimal e = service.getCppiValues().getExposure();
 		return new CPPIMeasuredPerformanceValue(e);

@@ -156,5 +156,12 @@ public class CPPIValues {
 		ret += "; partRisklessAsset = " + partRisklessAsset;
 		return ret;
 	}
+	
+	public void setPartRiskyAsset(BigDecimal newPartRiskAsset){
+		this.partRiskyAsset = newPartRiskAsset;
+	}
 
+	public void setPartRisklessAsset(BigDecimal newPartRisklessAsset){
+		this.partRisklessAsset = newPartRisklessAsset;
+	}
 }
