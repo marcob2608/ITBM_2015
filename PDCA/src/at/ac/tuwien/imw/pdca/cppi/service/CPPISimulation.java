@@ -34,12 +34,6 @@ public class CPPISimulation {
 			Thread.sleep(50);
 			log.info("PlanProcess started");
 
-			doProcess = new CPPIDoProcess();
-			doThread = new Thread(doProcess);
-			doThread.start();
-			Thread.sleep(50);
-			log.info("DoProcess started");
-			
 			checkProcess = new CPPICheckProcess();
 			checkThread = new Thread(checkProcess);
 			checkThread.start();
@@ -49,11 +43,15 @@ public class CPPISimulation {
 			actProcess = new CPPIActProcess();
 			actThread = new Thread(actProcess);
 			actThread.start();
+			Thread.sleep(50);
 			log.info("ActProcess started");
 
+			doProcess = new CPPIDoProcess();
+			doThread = new Thread(doProcess);
+			doThread.start();
+			log.info("DoProcess started");
 
 			new Thread(new CPPIStockPriceGenerator()).start();
-			log.info("PriceGenerator started");
 
 		} catch (InterruptedException e) {
 			e.printStackTrace();

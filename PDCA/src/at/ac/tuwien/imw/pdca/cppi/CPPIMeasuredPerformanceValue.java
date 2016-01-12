@@ -8,7 +8,6 @@ public class CPPIMeasuredPerformanceValue extends MeasuredPerformanceValue<BigDe
 
 	public CPPIMeasuredPerformanceValue(BigDecimal value) {
 		super(value);
-		// TODO Auto-generated constructor stub
 	}
 
 }

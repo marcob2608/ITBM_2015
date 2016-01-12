@@ -27,9 +27,13 @@ public class CPPICheckProcess extends CheckProcess<BigDecimal> implements Closea
 				e.printStackTrace();
 			}
 			CPPIService service = CPPIService.getInstance();
-			CPPIMeasureRules measurerules = new CPPIMeasureRules();
-			ObjectiveSetting<BigDecimal> objective = new CPPIObjectiveSetting();
 
+			//Measure process
+			CPPIMeasureRules measurerules = new CPPIMeasureRules();
+			measurerules.measure();
+
+			//Check process
+			ObjectiveSetting<BigDecimal> objective = new CPPIObjectiveSetting();
 			objective.setObjectiveSetting(service.getCppiValues().getFloor());
 
 			MeasuredPerformanceValue<BigDecimal> value = measurerules.measure(); 
