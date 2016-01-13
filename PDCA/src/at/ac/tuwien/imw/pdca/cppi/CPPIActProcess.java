@@ -40,7 +40,7 @@ public class CPPIActProcess extends ActProcess {
 		correctiveActRules.applyActRules();
 		BigDecimal newPartRiskyAsset = service.getCppiValues().getPartRiskyAsset();
 		BigDecimal correctiveAssets = newPartRiskyAsset.subtract(oldPartRiskyAsset);
-		if(oldPartRiskyAsset != BigDecimal.ZERO){
+		if(correctiveAssets != BigDecimal.ZERO){
 			if(correctiveAssets.compareTo(BigDecimal.ZERO) > 0){
 				log.info("Buy: " + correctiveAssets + " risky assets");
 				return new CPPICorrectiveActOutput(correctiveAssets);

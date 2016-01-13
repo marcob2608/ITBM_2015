@@ -20,7 +20,7 @@ public class CPPICheckProcess extends CheckProcess<BigDecimal> implements Closea
 
 	@Override
 	public void run() {
-		while(running) {
+		while(CPPIService.getInstance().getPlanConfiguration().getRisklessAssetLastDays() >= CPPIService.getInstance().getCurrentPeriod()) {
 			try {
 				Thread.sleep(CPPIService.CONTROL_INTERVAL*1000);
 			} catch (Exception e) {
@@ -30,17 +30,15 @@ public class CPPICheckProcess extends CheckProcess<BigDecimal> implements Closea
 
 			//Measure process
 			CPPIMeasureRules measurerules = new CPPIMeasureRules();
-			measurerules.measure();
+			MeasuredPerformanceValue<BigDecimal> performanceValue = measurerules.measure();
 
 			//Check process
 			ObjectiveSetting<BigDecimal> objective = new CPPIObjectiveSetting();
-			objective.setObjectiveSetting(service.getCppiValues().getFloor());
-
-			MeasuredPerformanceValue<BigDecimal> value = measurerules.measure(); 
-
-			Deviation<BigDecimal> deviation = getCheckResult(objective, value);
-
+			objective.setObjectiveSetting(service.getCppiValues().getFloor());		
+			rules.applyCheckingRules();
+			Deviation<BigDecimal> deviation = getCheckResult(objective, performanceValue);
 			service.setDeviationValue(deviation.getValue());
+			
 		}		
 	}
 	
