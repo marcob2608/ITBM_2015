@@ -15,6 +15,7 @@ public class CPPIActProcess extends ActProcess {
 	private final static Logger log = LogManager.getLogger(CPPIActProcess.class);
 	private CPPIService service;
 	private CPPICorrectiveActRules correctiveActRules;
+	private BigDecimal oldPartRiskyAsset = new BigDecimal(0);
 	
 	public CPPIActProcess(){
 		this.service = CPPIService.getInstance();
@@ -36,16 +37,18 @@ public class CPPIActProcess extends ActProcess {
 
 	@Override
 	public CorrectiveActOutput act(Deviation deviation) {
-		BigDecimal oldPartRiskyAsset = service.getCppiValues().getRiskAssetValue();
+		if (service.getCurrentPeriod() == 0){
+			oldPartRiskyAsset = service.getCppiValues().getPartRiskyAsset();
+		}
 		correctiveActRules.applyActRules();
 		BigDecimal newPartRiskyAsset = service.getCppiValues().getPartRiskyAsset();
 		BigDecimal correctiveAssets = newPartRiskyAsset.subtract(oldPartRiskyAsset);
-		if(correctiveAssets != BigDecimal.ZERO){
+		if(deviation.getValue() != BigDecimal.ZERO){
 			if(correctiveAssets.compareTo(BigDecimal.ZERO) > 0){
-				log.info("Period " + service.getCurrentPeriod() + " Buy: " + correctiveAssets + " risky assets");
+				log.info("Period " + service.getCurrentPeriod() + " Buy: " + correctiveAssets.setScale(4, BigDecimal.ROUND_HALF_UP) + " risky assets");
 				return new CPPICorrectiveActOutput(correctiveAssets);
 			} else if (correctiveAssets.compareTo(BigDecimal.ZERO) < 0) {
-				log.info("Period " + service.getCurrentPeriod() + " Sell: " + correctiveAssets.abs() + " risky assets");
+				log.info("Period " + service.getCurrentPeriod() + " Sell: " + correctiveAssets.abs().setScale(4, BigDecimal.ROUND_HALF_UP) + " risky assets");
 				return new CPPICorrectiveActOutput(correctiveAssets);
 			}
 		}

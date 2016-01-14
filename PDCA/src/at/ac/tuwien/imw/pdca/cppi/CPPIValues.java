@@ -42,14 +42,15 @@ public class CPPIValues {
 
 	private void calculatePartRisklessAsset() {
 		BigDecimal p = getPortfolio();
-		BigDecimal r = getReserveasset();
-		this.partRisklessAsset = r.divide(p, 50, BigDecimal.ROUND_HALF_UP);
+		BigDecimal r = getPartRiskyAsset();
+		this.partRisklessAsset = p.subtract(r);
 	}
 
 	private void calculatePartRiskyAsset() {
 		BigDecimal p = getPortfolio();
-		BigDecimal e = getExposure();
-		this.partRiskyAsset = e.divide(p, 50, BigDecimal.ROUND_HALF_UP);
+		BigDecimal c = getCushion();
+		BigDecimal m = conf.getLaverage();
+		this.partRiskyAsset = m.multiply(c).min(p);
 	}
 
 	private void calculateReserveAsset() {

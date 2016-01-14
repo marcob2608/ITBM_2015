@@ -5,8 +5,11 @@ import java.math.BigDecimal;
 import at.ac.tuwien.imw.pdca.MeasureRules;
 import at.ac.tuwien.imw.pdca.MeasuredPerformanceValue;
 import at.ac.tuwien.imw.pdca.cppi.service.CPPIService;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 public class CPPIMeasureRules implements MeasureRules<Object>{
+	private static Logger log = LogManager.getLogger(CPPIMeasureRules.class);
 
 	@Override
 	public MeasuredPerformanceValue measure() {
@@ -22,13 +25,16 @@ public class CPPIMeasureRules implements MeasureRules<Object>{
 		CPPITSR cppiTsr = new CPPITSR(TSRNew);
 		service.setCurrentTSR(cppiTsr);
 		service.setTSRChange(new CPPIDeviation(TSRNew.subtract(oldTsr.getValue())));
+		log.info("Period " + service.getCurrentPeriod() + " current Tsr: " + TSRNew);
 		
 		//Portfolio wealth
 		BigDecimal risklessWealth = values.getPartRisklessAsset().multiply(BigDecimal.ONE.add(config.getRisklessAssetInterest()).pow(service.getCurrentPeriod()/config.getRisklessAssetLastDays()));
 		BigDecimal riskfullWealth = values.getPartRiskyAsset().multiply(BigDecimal.ONE.add(cppiTsr.getValue()));
 		BigDecimal totalWealth = risklessWealth.add(riskfullWealth);
 		CPPIMeasuredPerformanceValue performance = new CPPIMeasuredPerformanceValue(totalWealth);
-		
+		if (service.getCurrentPeriod() > 0) {
+			service.getPlanConfiguration().setPortfolio(totalWealth);
+		}
 		return performance;
 	}
 

@@ -25,7 +25,7 @@ public class CPPICorrectiveActRules implements CorrectiveActRules{
 		values.setPartRiskyAsset(riskyAsset);
 		values.setPartRisklessAsset(risklessAsset);
 		
-		log.info("Period " + service.getCurrentPeriod() + " New act configuration: Hold " + riskyAsset.setScale(4, BigDecimal.ROUND_HALF_UP) + " risky assets and " + risklessAsset.setScale(4, BigDecimal.ROUND_HALF_UP) + " (riskless assets)");
+		log.info("Period " + service.getCurrentPeriod() + " New act configuration: Hold " + riskyAsset.setScale(4, BigDecimal.ROUND_HALF_UP) + " risky assets and " + risklessAsset.setScale(4, BigDecimal.ROUND_HALF_UP) + " riskless assets");
 		
 	}
 
