@@ -43,13 +43,13 @@ public class CPPIValues {
 	private void calculatePartRisklessAsset() {
 		BigDecimal p = getPortfolio();
 		BigDecimal r = getReserveasset();
-		this.partRisklessAsset = r.divide(p);
+		this.partRisklessAsset = r.divide(p, 50, BigDecimal.ROUND_HALF_UP);
 	}
 
 	private void calculatePartRiskyAsset() {
 		BigDecimal p = getPortfolio();
 		BigDecimal e = getExposure();
-		this.partRiskyAsset = e.divide(p);
+		this.partRiskyAsset = e.divide(p, 50, BigDecimal.ROUND_HALF_UP);
 	}
 
 	private void calculateReserveAsset() {
@@ -74,9 +74,10 @@ public class CPPIValues {
 
 	private void calculateFloor() {
 		double P = portfolio.doubleValue();
-		double d = conf.getRisklessAssetLastDays() - CPPIService.getInstance().getCurrentPeriod();
-		double x = 1/(1.00 + (getConf().getRisklessAssetInterest().doubleValue()/d));
-		this.floor = new BigDecimal(P*Math.pow(x,d)); 
+		double d = (conf.getRisklessAssetLastDays() - CPPIService.getInstance().getCurrentPeriod());
+		double div = d / conf.getRisklessAssetLastDays();
+		double x = 1.00 + (getConf().getRisklessAssetInterest().doubleValue());
+		this.floor = new BigDecimal(P / Math.pow(x,div)); 
 	}
 
 	public CPPIValues(CPPIPlanConfiguration conf, BigDecimal portfolio, BigDecimal tsr, BigDecimal floor, BigDecimal cushion,
