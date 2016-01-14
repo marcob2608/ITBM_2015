@@ -29,7 +29,7 @@ public class CPPIValues {
 		portfolio = conf.getPortfolio();
 		previousStockPrice = CPPIService.getInstance().getPreviousStockPrice();
 		actualStockPrice = CPPIService.getInstance().getCurrentStockPrice();
-		tsr = actualStockPrice.divide(previousStockPrice).subtract(new BigDecimal(1));
+		tsr = actualStockPrice.divide(previousStockPrice, 4, BigDecimal.ROUND_HALF_UP).subtract(new BigDecimal(1));
 		calculateFloor();
 		calculateCushion();
 		calculateExposure();
@@ -37,7 +37,7 @@ public class CPPIValues {
 		calculatePartRiskyAsset();
 		calculatePartRisklessAsset();
 		
-		log.info("Configuration period: "+0+", Floor: "+floor.setScale(4, BigDecimal.ROUND_HALF_UP)+", Cushion: "+cushion.setScale(4, BigDecimal.ROUND_HALF_UP)+", Exposure: "+exposure.setScale(4, BigDecimal.ROUND_HALF_UP)+", Reserveasset: "+reserveasset.setScale(4, BigDecimal.ROUND_HALF_UP)+", PartRisky: "+partRiskyAsset.setScale(4, BigDecimal.ROUND_HALF_UP)+", PartRiskless: "+partRisklessAsset.setScale(4, BigDecimal.ROUND_HALF_UP)+", NewPortfolio: "+portfolio.setScale(4, BigDecimal.ROUND_HALF_UP));
+		log.info("Configuration period: "+CPPIService.getInstance().getCurrentPeriod()+", Floor: "+floor.setScale(4, BigDecimal.ROUND_HALF_UP)+", Cushion: "+cushion.setScale(4, BigDecimal.ROUND_HALF_UP)+", Exposure: "+exposure.setScale(4, BigDecimal.ROUND_HALF_UP)+", Reserveasset: "+reserveasset.setScale(4, BigDecimal.ROUND_HALF_UP)+", PartRisky: "+partRiskyAsset.setScale(4, BigDecimal.ROUND_HALF_UP)+", PartRiskless: "+partRisklessAsset.setScale(4, BigDecimal.ROUND_HALF_UP)+", NewPortfolio: "+portfolio.setScale(4, BigDecimal.ROUND_HALF_UP));
 	}
 
 	private void calculatePartRisklessAsset() {
@@ -74,9 +74,9 @@ public class CPPIValues {
 
 	private void calculateFloor() {
 		double P = portfolio.doubleValue();
-		double d = conf.getRisklessAssetLastDays()- CPPIService.getInstance().getCurrentPeriod();
-		double x = 1.00 + (getConf().getRisklessAssetInterest().doubleValue()/d);
-		this.floor = new BigDecimal(P/Math.pow(x,d)); 
+		double d = conf.getRisklessAssetLastDays() - CPPIService.getInstance().getCurrentPeriod();
+		double x = 1/(1.00 + (getConf().getRisklessAssetInterest().doubleValue()/d));
+		this.floor = new BigDecimal(P*Math.pow(x,d)); 
 	}
 
 	public CPPIValues(CPPIPlanConfiguration conf, BigDecimal portfolio, BigDecimal tsr, BigDecimal floor, BigDecimal cushion,

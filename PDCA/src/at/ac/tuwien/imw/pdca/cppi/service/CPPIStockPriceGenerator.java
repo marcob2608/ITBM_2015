@@ -22,7 +22,7 @@ public class CPPIStockPriceGenerator implements Runnable {
 		log.info("CPPIStockPriceGenerator process started");
 		while (true) {
 			try {
-				Thread.sleep(10000);
+				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				//e.printStackTrace();
 			}
