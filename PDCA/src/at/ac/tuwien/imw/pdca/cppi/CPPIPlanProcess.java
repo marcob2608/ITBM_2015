@@ -23,7 +23,7 @@ public class CPPIPlanProcess extends PlanProcess<Object> {
 	@Override
 	public void plan() {
 		this.rules.applyPlanningRules();
-		log.info("Planing Rules applied");
+		log.info("Planning Rules applied");
 	}
 	
 	public CPPIPlanningRules getPlanningRules() {
