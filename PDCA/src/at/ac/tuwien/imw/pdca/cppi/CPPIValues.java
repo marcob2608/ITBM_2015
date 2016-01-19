@@ -29,7 +29,7 @@ public class CPPIValues {
 		portfolio = conf.getPortfolio();
 		previousStockPrice = CPPIService.getInstance().getPreviousStockPrice();
 		actualStockPrice = CPPIService.getInstance().getCurrentStockPrice();
-		tsr = actualStockPrice.divide(previousStockPrice, 4, BigDecimal.ROUND_HALF_UP).subtract(new BigDecimal(1));
+		tsr = actualStockPrice.divide(previousStockPrice, 10, BigDecimal.ROUND_HALF_UP).subtract(new BigDecimal(1));
 		calculateFloor();
 		calculateCushion();
 		calculateExposure();

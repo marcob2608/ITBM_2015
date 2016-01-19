@@ -21,20 +21,21 @@ public class CPPIMeasureRules implements MeasureRules<Object>{
 		
 		//TSR
 		MeasuredPerformanceValue<BigDecimal> oldTsr = service.getCurrentTSR();
-		BigDecimal TSRNew = stockPriceCurrent.divide(stockPricePrevious, 6, BigDecimal.ROUND_UP).subtract(BigDecimal.ONE);
+		BigDecimal TSRNew = stockPriceCurrent.divide(stockPricePrevious, 10, BigDecimal.ROUND_UP).subtract(BigDecimal.ONE);
 		CPPITSR cppiTsr = new CPPITSR(TSRNew);
 		service.setCurrentTSR(cppiTsr);
 		service.setTSRChange(new CPPIDeviation(TSRNew.subtract(oldTsr.getValue())));
 		log.info("Period " + service.getCurrentPeriod() + " current Tsr: " + TSRNew);
 		
 		//Portfolio wealth
-		BigDecimal risklessWealth = values.getPartRisklessAsset().multiply(BigDecimal.ONE.add(config.getRisklessAssetInterest()).pow(service.getCurrentPeriod()/config.getRisklessAssetLastDays()));
-		BigDecimal riskfullWealth = values.getPartRiskyAsset().multiply(BigDecimal.ONE.add(cppiTsr.getValue()));
+		BigDecimal risklessWealth = (values.getPartRisklessAsset()).multiply((BigDecimal.ONE.add(config.getRisklessAssetInterest())).pow(1/config.getRisklessAssetLastDays()));
+		BigDecimal riskfullWealth = values.getPartRiskyAsset().multiply(BigDecimal.ONE.add(TSRNew));
 		BigDecimal totalWealth = risklessWealth.add(riskfullWealth);
 		CPPIMeasuredPerformanceValue performance = new CPPIMeasuredPerformanceValue(totalWealth);
-		if (service.getCurrentPeriod() > 0) {
+
+		//if (service.getCurrentPeriod() > 0) {
 			service.getPlanConfiguration().setPortfolio(totalWealth);
-		}
+		//}
 		return performance;
 	}
 

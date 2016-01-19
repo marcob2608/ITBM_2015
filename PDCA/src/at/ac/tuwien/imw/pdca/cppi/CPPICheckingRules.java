@@ -17,7 +17,7 @@ public class CPPICheckingRules implements CheckingRules{
 		CPPIService service = CPPIService.getInstance();
 		CPPIValues values = service.getCppiValues();
 		
-		service.setCppiValues(new CPPIValues(service.getPlanConfiguration()));
+		//service.setCppiValues(new CPPIValues(service.getPlanConfiguration()));
 	}
 
 }

@@ -45,14 +45,14 @@ public class CPPIActProcess extends ActProcess {
 		BigDecimal correctiveAssets = newPartRiskyAsset.subtract(oldPartRiskyAsset);
 		if(deviation.getValue() != BigDecimal.ZERO){
 			if(correctiveAssets.compareTo(BigDecimal.ZERO) > 0){
-				log.info("Period " + service.getCurrentPeriod() + " Buy: " + correctiveAssets.setScale(4, BigDecimal.ROUND_HALF_UP) + " risky assets");
+//				log.info("Period " + service.getCurrentPeriod() + " Buy: " + correctiveAssets.setScale(4, BigDecimal.ROUND_HALF_UP) + " risky assets");
 				return new CPPICorrectiveActOutput(correctiveAssets);
 			} else if (correctiveAssets.compareTo(BigDecimal.ZERO) < 0) {
-				log.info("Period " + service.getCurrentPeriod() + " Sell: " + correctiveAssets.abs().setScale(4, BigDecimal.ROUND_HALF_UP) + " risky assets");
+//				log.info("Period " + service.getCurrentPeriod() + " Sell: " + correctiveAssets.abs().setScale(4, BigDecimal.ROUND_HALF_UP) + " risky assets");
 				return new CPPICorrectiveActOutput(correctiveAssets);
 			}
 		}
-		log.info("Period " + service.getCurrentPeriod() + " no change");
+//		log.info("Period " + service.getCurrentPeriod() + " no change");
 		return new CPPICorrectiveActOutput(correctiveAssets);
 	}
 }

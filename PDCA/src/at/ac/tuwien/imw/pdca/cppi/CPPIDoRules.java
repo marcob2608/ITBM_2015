@@ -14,8 +14,10 @@ public class CPPIDoRules implements DoRules{
 	
 	@Override
 	public void applyDoRules() {
+		CPPIService service = CPPIService.getInstance();
 		// Because this process does not actually sells and buys it only creates an output of the new portfolio
-		log.info("Period " + CPPIService.getInstance().getCurrentPeriod() + " New portfolio arrangement after transaction: (risky assessed)" + CPPIService.getInstance().getCppiValues().getPartRiskyAsset().setScale(4, BigDecimal.ROUND_HALF_UP) + "; (riskless assessed)" + CPPIService.getInstance().getCppiValues().getPartRisklessAsset().setScale(4, BigDecimal.ROUND_HALF_UP));
+//		log.info("Period " + CPPIService.getInstance().getCurrentPeriod() + " New portfolio arrangement after transaction: (risky assessed)" + CPPIService.getInstance().getCppiValues().getPartRiskyAsset().setScale(4, BigDecimal.ROUND_HALF_UP) + "; (riskless assessed)" + CPPIService.getInstance().getCppiValues().getPartRisklessAsset().setScale(4, BigDecimal.ROUND_HALF_UP));
+		service.setCppiValues(new CPPIValues(service.getPlanConfiguration()));
 	}
 
 }

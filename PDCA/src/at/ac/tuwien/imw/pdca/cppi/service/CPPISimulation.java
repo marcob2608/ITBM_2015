@@ -28,6 +28,8 @@ public class CPPISimulation {
 		BasicConfigurator.configure();
 		CPPIService.getInstance().init();
 		try {
+			new Thread(new CPPIStockPriceGenerator()).start();
+
 			planProcess = new CPPIPlanProcess();
 			planThread = new Thread(planProcess);
 			planThread.start();
@@ -50,8 +52,6 @@ public class CPPISimulation {
 			doThread = new Thread(doProcess);
 			doThread.start();
 			log.info("DoProcess started");
-
-			new Thread(new CPPIStockPriceGenerator()).start();
 
 		} catch (InterruptedException e) {
 			e.printStackTrace();
