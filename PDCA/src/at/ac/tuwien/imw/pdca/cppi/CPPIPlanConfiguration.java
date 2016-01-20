@@ -11,20 +11,20 @@ public class CPPIPlanConfiguration extends PlanConfiguration {
 	
 	private final static Logger log = LogManager.getLogger(CPPIPlanConfiguration.class);
 	//original
-//	private BigDecimal riskAssetPercent = new BigDecimal(0.3);
-//	private BigDecimal risklessAssetPercent = new BigDecimal(0.7);
-//	private Integer risklessAssetLastDays = 365;
-//	private BigDecimal risklessAssetInterest = new BigDecimal(0.05);
-//	private BigDecimal laverage = new BigDecimal(2.0);
-//	private BigDecimal portfolio = new BigDecimal(100);
-	
-	//slides
-	private BigDecimal riskAssetPercent = new BigDecimal(0.9);
-	private BigDecimal risklessAssetPercent = new BigDecimal(0.1);
+	private BigDecimal riskAssetPercent = new BigDecimal(0.3);
+	private BigDecimal risklessAssetPercent = new BigDecimal(0.7);
 	private Integer risklessAssetLastDays = 365;
 	private BigDecimal risklessAssetInterest = new BigDecimal(0.05);
 	private BigDecimal laverage = new BigDecimal(2.0);
 	private BigDecimal portfolio = new BigDecimal(100);
+	
+	//slides
+//	private BigDecimal riskAssetPercent = new BigDecimal(0.9);
+//	private BigDecimal risklessAssetPercent = new BigDecimal(0.1);
+//	private Integer risklessAssetLastDays = 365;
+//	private BigDecimal risklessAssetInterest = new BigDecimal(0.05);
+//	private BigDecimal laverage = new BigDecimal(2.0);
+//	private BigDecimal portfolio = new BigDecimal(100);
 	
 //  Taken from wikipedia	
 //	private BigDecimal riskAssetPercent = new BigDecimal(0.2438);
